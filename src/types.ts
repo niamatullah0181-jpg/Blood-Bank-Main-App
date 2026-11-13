@@ -18,35 +18,26 @@ export interface Organization extends Location {
   name: string;
 }
 
-export interface Profile {
+export interface UserProfile {
   id: string;
-  fullName: string;
+  name: string;
   phone: string;
   bloodGroup: BloodGroup;
   location: Location;
   role: Role;
-}
-
-export interface Membership {
-  id: string;
-  organizationId: string;
-  organizationName: string;
-  role: MemberRole;
   verified: boolean;
 }
 
-export interface DonorResult {
-  userId: string;
-  organizationId: string | null;
-  organizationName: string | null;
+export interface Donor {
+  id: string;
   name: string;
+  phone: string;
   bloodGroup: BloodGroup;
   location: Location;
   available: boolean;
-  lastDonatedAt: string | null;
-  donationsCount: number;
-  contactVisible: boolean;
-  phone: string | null;
+  lastDonated: string | null;
+  donations: number;
+  organizationId?: string | null;
 }
 
 export interface BloodRequest {
@@ -69,7 +60,7 @@ export interface BloodRequest {
 
 export interface PermissionRequest {
   id: string;
-  donorUserId: string;
+  donorId: string;
   donorName: string;
   requesterId: string;
   requesterName: string;
@@ -92,13 +83,6 @@ export interface ActivityLog {
   volunteerId: string;
   category: LogCategory;
   note: string;
-  createdAt: string;
-}
-
-export interface PendingVolunteer {
-  id: string;
-  name: string;
-  phone: string | null;
   createdAt: string;
 }
 

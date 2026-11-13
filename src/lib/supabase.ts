@@ -1,10 +1,16 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 
-const url = import.meta.env.VITE_SUPABASE_URL;
-const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+const url = import.meta.env.VITE_SUPABASE_URL as string | undefined;
+const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
 
-if (!url || !anonKey) {
-  throw new Error('The app is not connected to its database yet.');
+export const supabase: SupabaseClient | null =
+  url && anonKey ? createClient(url, anonKey) : null;
+
+export function requireSupabase(): SupabaseClient {
+  if (!supabase) {
+    throw new Error(
+      'Database is not configured. Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to your environment.',
+    );
+  }
+  return supabase;
 }
-
-export const supabase = createClient(url, anonKey);
